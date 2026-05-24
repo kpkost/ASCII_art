@@ -186,6 +186,8 @@ void ascii_animation(int frames_count, const std::string& frames_path,
             std::this_thread::sleep_for(target_dt - elapsed);
         }
     }
+    cursorInfo.bVisible = cursorWasVisible;
+    SetConsoleCursorInfo(hOut, &cursorInfo);
 }
 
 
