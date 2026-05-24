@@ -129,8 +129,8 @@ vector<string> ascii_convert(const string& image_path, int scale = 0) {
 
 
 //Очистка экрана
-inline void clearScreen() {
-    std::cout << "\033[2J\033[H" << std::flush;
+inline void clear_screen() {
+    system("cls");
 }
  
 
@@ -188,11 +188,22 @@ void ascii_animation(int frames_count, const std::string& frames_path,
     }
 }
 
+
+void fullscreen() {
+    HWND hwnd = GetConsoleWindow();
+    int x = GetSystemMetrics(SM_CXSCREEN);
+    int y = GetSystemMetrics(SM_CYSCREEN);
+    SetWindowPos(hwnd, HWND_TOP, 0, 0, x, y, SWP_FRAMECHANGED);
+}
+
 int main() {
     std::cin.tie(nullptr);
     int frame_count, scale, frame_rate;
     string path, file_name;
-    cout << "";
+    system("mode con cols=3000 lines=3000");
+    fullscreen();
+    cout << "Monospaced font (Consolas, Lucida Console), size 12-14 and Bold are recommended" << endl;
+    cout << "You can change font by right clicking on top of the window -> Properties -> Font" << endl;
     cout << "Input frame count (max 9999):" << endl << endl;
     cin >> frame_count;
     cout << endl;
@@ -207,13 +218,10 @@ int main() {
     cout << endl;
     cout << "Input file name (frames should be named 'file_name'_number.jpg, example: frame_0001):" << endl << endl;
     cin >> file_name;
-    cout << endl;
-    cout << "Press any key to continue...";
-    _getch();
-    cout << endl << endl;
+    cout << endl << endl << endl;
     cout << "Wait...";
     ascii_animation(frame_count, path, file_name + "_", scale, frame_rate);
-    clearScreen();
+    clear_screen();
     cout << "Press any key to exit";
     _getch();
     return 0;
